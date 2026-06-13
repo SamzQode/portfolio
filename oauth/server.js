@@ -5,7 +5,9 @@
  * Required env vars:
  *   GITHUB_CLIENT_ID
  *   GITHUB_CLIENT_SECRET
- *   OAUTH_REDIRECT_URI  (e.g. https://your-app.onrender.com/callback)
+ *
+ * Optional:
+ *   OAUTH_REDIRECT_URI — only needed off Render; on Render we use RENDER_EXTERNAL_URL
  */
 
 const http = require('http');
@@ -14,31 +16,39 @@ const { URL } = require('url');
 
 const CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
-const REDIRECT_URI = process.env.OAUTH_REDIRECT_URI;
 const PORT = process.env.PORT || 3000;
 
-function configStatus() {
+function getRedirectUri(req) {
+  if (process.env.RENDER_EXTERNAL_URL) {
+    return `${process.env.RENDER_EXTERNAL_URL.replace(/\/$/, '')}/callback`;
+  }
+  const host = (req?.headers['x-forwarded-host'] || req?.headers.host || '')
+    .split(',')[0]
+    .trim();
+  if (host && !host.includes('localhost')) {
+    return `https://${host}/callback`;
+  }
+  return process.env.OAUTH_REDIRECT_URI || '';
+}
+
+function configStatus(req) {
+  const redirectUri = getRedirectUri(req);
   const issues = [];
   if (!CLIENT_ID) issues.push('GITHUB_CLIENT_ID is missing');
   else if (CLIENT_ID.length < 10) {
     issues.push('GITHUB_CLIENT_ID looks too short — recopy from GitHub OAuth App settings');
   }
   if (!CLIENT_SECRET) issues.push('GITHUB_CLIENT_SECRET is missing');
-  if (!REDIRECT_URI) issues.push('OAUTH_REDIRECT_URI is missing');
-  else if (!REDIRECT_URI.endsWith('/callback')) {
-    issues.push('OAUTH_REDIRECT_URI must end with /callback');
+  if (!redirectUri) issues.push('Could not determine callback URL');
+  else if (!redirectUri.endsWith('/callback')) {
+    issues.push('Callback URL must end with /callback');
   }
   return {
     ok: issues.length === 0,
     issues,
     clientIdPrefix: CLIENT_ID ? `${CLIENT_ID.slice(0, 4)}…` : null,
-    redirectUri: REDIRECT_URI || null,
+    redirectUri: redirectUri || null,
   };
-}
-
-const CONFIG = configStatus();
-if (!CONFIG.ok) {
-  console.warn('OAuth config issues:', CONFIG.issues.join('; '));
 }
 
 function send(res, status, body, contentType = 'text/html') {
@@ -46,13 +56,13 @@ function send(res, status, body, contentType = 'text/html') {
   res.end(body);
 }
 
-function fetchToken(code) {
+function fetchToken(code, redirectUri) {
   return new Promise((resolve, reject) => {
     const body = JSON.stringify({
       client_id: CLIENT_ID,
       client_secret: CLIENT_SECRET,
       code,
-      redirect_uri: REDIRECT_URI,
+      redirect_uri: redirectUri,
     });
     const req = https.request(
       {
@@ -79,16 +89,21 @@ function fetchToken(code) {
 
 const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://localhost:${PORT}`);
+  const redirectUri = getRedirectUri(req);
+  const config = configStatus(req);
 
   if (url.pathname === '/health') {
-    const body = CONFIG.ok
-      ? 'ok'
-      : JSON.stringify({ status: 'misconfigured', ...CONFIG }, null, 2);
-    return send(res, CONFIG.ok ? 200 : 503, body, CONFIG.ok ? 'text/plain' : 'application/json');
+    const body = config.ok
+      ? `ok\n${redirectUri}`
+      : JSON.stringify({ status: 'misconfigured', ...config }, null, 2);
+    return send(res, config.ok ? 200 : 503, body, config.ok ? 'text/plain' : 'application/json');
   }
 
   if (url.pathname === '/auth') {
-    const target = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=repo,user`;
+    if (!config.ok) {
+      return send(res, 503, JSON.stringify(config, null, 2), 'application/json');
+    }
+    const target = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=repo,user`;
     res.writeHead(302, { Location: target });
     return res.end();
   }
@@ -98,7 +113,7 @@ const server = http.createServer(async (req, res) => {
     if (!code) return send(res, 400, 'Missing code');
 
     try {
-      const token = await fetchToken(code);
+      const token = await fetchToken(code, redirectUri);
       if (token.error) return send(res, 400, JSON.stringify(token), 'application/json');
 
       const script = `
@@ -126,5 +141,10 @@ const server = http.createServer(async (req, res) => {
 });
 
 server.listen(PORT, () => {
+  const config = configStatus();
   console.log(`OAuth proxy listening on port ${PORT}`);
+  console.log(`Callback URL: ${getRedirectUri()}`);
+  if (!config.ok) {
+    console.warn('OAuth config issues:', config.issues.join('; '));
+  }
 });

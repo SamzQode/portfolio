@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Samz Qode — Software Engineer & Product Developer. iOS, web, and healthcare technology." />
+  <title>Samz Qode — Software Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ═══ NAV ═══ -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Samz<em>Qode</em></a>
+      <button class="nav-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#courses">Courses</a></li>
+        <li><a href="projects.html">All Work</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
+  <header class="hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="hero-eyebrow">Software Engineer · Product Developer</p>
+        <h1 class="hero-title">
+          <span class="line"><span>Building digital</span></span>
+          <span class="line"><span>products with</span></span>
+          <span class="line"><span><em style="font-style:italic;color:var(--accent)">intent.</em></span></span>
+        </h1>
+      </div>
+      <div class="hero-right">
+        <p class="hero-role">iOS · Web · Healthcare Tech</p>
+        <p class="hero-desc">
+          I design and ship thoughtful software — from SwiftUI mobile apps and watchOS companions to full-stack web platforms and enterprise documentation systems.
+        </p>
+        <div class="hero-tags">
+          <span class="tag">SwiftUI</span>
+          <span class="tag">Next.js</span>
+          <span class="tag">PMP</span>
+          <span class="tag">Business Analysis</span>
+          <span class="tag">Healthcare Tech</span>
+        </div>
+        <div style="margin-top:32px;display:flex;gap:12px;flex-wrap:wrap">
+          <a href="projects.html" class="btn btn-primary">
+            View Projects
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#contact" class="btn">Get in Touch</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll">Scroll</div>
+  </header>
+
+  <!-- ═══ STATS ═══ -->
+  <div class="about-strip" id="about">
+    <div class="container about-strip-inner reveal" id="stats-grid"></div>
+  </div>
+
+  <!-- ═══ FEATURED PROJECTS ═══ -->
+  <section class="section" id="projects">
+    <div class="container">
+      <div class="section-label reveal"><span>01</span> Featured Work</div>
+      <h2 class="section-heading reveal">Selected Projects</h2>
+      <p class="section-sub reveal">A curated set of products I've designed, built, and shipped — spanning consumer apps, corporate web, and healthcare systems.</p>
+
+      <div class="projects-grid reveal" id="featured-projects"></div>
+
+      <div style="margin-top:48px" class="reveal">
+        <a href="projects.html" class="btn">
+          See All Projects
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ EDUCATION ═══ -->
+  <section class="section" id="education">
+    <div class="container">
+      <div class="section-label reveal"><span>02</span> Education</div>
+      <h2 class="section-heading reveal">Academic Background</h2>
+      <p class="section-sub reveal">Formal training in technology and business that grounds my engineering and product work.</p>
+
+      <div class="timeline reveal" id="education-list"></div>
+    </div>
+  </section>
+
+  <!-- ═══ COURSES ═══ -->
+  <section class="section" id="courses">
+    <div class="container">
+      <div class="section-label reveal"><span>03</span> Continuous Learning</div>
+      <h2 class="section-heading reveal">Courses &amp; Certifications</h2>
+      <p class="section-sub reveal">Ongoing professional development across mobile, web, and cloud technologies.</p>
+
+      <div class="courses-grid reveal" id="courses-grid"></div>
+    </div>
+  </section>
+
+  <!-- ═══ CONTACT ═══ -->
+  <section class="contact" id="contact">
+    <div class="container contact-inner">
+      <div class="reveal">
+        <h2 class="contact-heading">Let's build<br><em>something.</em></h2>
+        <p class="contact-text">
+          Open to engineering roles, freelance projects, and creative collaborations. Reach out via email or connect on social.
+        </p>
+        <p style="margin-top:20px;font-size:14px;color:var(--muted)">
+          <a data-email href="#" style="color:var(--accent);text-decoration:underline;text-underline-offset:3px"></a>
+        </p>
+      </div>
+      <div class="social-links reveal" data-social></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span data-copyright></span>
+      <a href="#" class="footer-back" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+        Back to top
+      </a>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

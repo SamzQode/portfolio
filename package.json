@@ -1,0 +1,13 @@
+{
+  "name": "samz-portfolio",
+  "private": true,
+  "scripts": {
+    "cms": "decap-server",
+    "preview": "python3 -m http.server 8080",
+    "dev": "concurrently \"npm run cms\" \"npm run preview\""
+  },
+  "devDependencies": {
+    "decap-server": "^3.1.0",
+    "concurrently": "^9.1.0"
+  }
+}

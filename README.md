@@ -1,75 +1,63 @@
 # Samz Qode — Personal Portfolio
 
-Static portfolio site inspired by [MO—ARTS](https://mo-arts.framer.ai/). Ready to upload to Hostinger.
+Static portfolio with **Decap CMS** visual editor. Inspired by [MO—ARTS](https://mo-arts.framer.ai/).
 
-## Quick edit guide
+**Live repo:** https://github.com/SamzQode/portfolio
 
-**Most content lives in one file:** `js/config.js`
+## Edit with CMS (recommended)
 
-Open it in any text editor, change what you need, save, and refresh the browser.
-
-| Section | Edit in `config.js` |
-|---------|---------------------|
-| Name, email, bio, tags | `profile` |
-| LinkedIn, GitHub, X links | `social` |
-| Education | `education` array |
-| Certifications & courses | `courses` array |
-| Projects (titles, descriptions, links) | `projects` array |
-| About stats | `stats` array |
-
-### Adding a new project
-
-Add an entry to the `projects` array in `config.js`:
-
-```js
-{
-  id: "my-project",        // used for anchor links
-  initials: "MP",          // thumbnail letters
-  thumb: "thumb-maison",   // color style (see css/styles.css)
-  title: "My Project",
-  type: "iOS · SwiftUI",
-  short: "One-line summary for home page.",
-  full: "Longer description for projects page.",
-  url: "https://github.com/Samzqode/my-repo",  // or "" for no link
-  featured: true           // true = shown on home page
-}
+```bash
+cd /Users/samz/portfolio
+npm install
+npm run dev
 ```
 
-### Changing social links
+| URL | Purpose |
+|-----|---------|
+| http://localhost:8080 | Preview site |
+| http://localhost:8080/admin | Visual editor |
 
-```js
-social: {
-  linkedin: "https://www.linkedin.com/in/samih-el-khider-a636aab1/",
-  github:   "https://github.com/Samzqode",
-  x:        "https://x.com/Samih_Omer"
-}
+Edit text, upload project images, and click **Publish**. Then commit and push:
+
+```bash
+git add .
+git commit -m "Update portfolio content"
+git push
 ```
 
-## Files
+Full setup guide (local + live on Hostinger): **[CMS-SETUP.md](./CMS-SETUP.md)**
+
+## Manual editing
+
+All content lives in **`content/portfolio.json`**. The site loads this file automatically.
+
+## Project structure
 
 ```
 portfolio/
-├── index.html       ← Main page
-├── projects.html    ← Full project showcase
-├── js/
-│   ├── config.js    ← ★ EDIT THIS FILE for content updates
-│   └── main.js      ← Renders config into the pages
+├── admin/              ← Decap CMS editor (/admin)
+│   ├── index.html
+│   └── config.yml
+├── content/
+│   └── portfolio.json  ← ★ Site content (edited via CMS or manually)
+├── images/uploads/     ← Uploaded project images
+├── oauth/              ← GitHub OAuth proxy (for live CMS on Hostinger)
+├── index.html
+├── projects.html
 ├── css/styles.css
-└── images/          ← Optional project screenshots
+└── js/main.js
 ```
 
 ## Upload to Hostinger
 
-1. Log in to [Hostinger hPanel](https://hpanel.hostinger.com)
-2. Go to **Websites → Manage → File Manager**
-3. Open `public_html`
-4. Upload all files keeping the folder structure
-5. Visit your domain
+1. [hPanel](https://hpanel.hostinger.com) → **File Manager** → `public_html`
+2. Upload all files keeping folder structure
+3. Visit your domain
+4. CMS editor at `yourdomain.com/admin` (requires OAuth setup — see CMS-SETUP.md)
 
-## Local preview
+## Preview only
 
 ```bash
-cd /Users/samz/portfolio
 python3 -m http.server 8080
 ```
 

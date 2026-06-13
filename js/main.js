@@ -7,9 +7,26 @@ const ICONS = {
   x: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`
 };
 
+const CONTENT_URL = 'content/portfolio.json';
+
 /* ── Render helpers ────────────────────────────────────────── */
 function padNum(n) {
   return String(n).padStart(2, '0');
+}
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function renderThumb(project) {
+  if (project.image) {
+    return `<img src="${escapeHtml(project.image)}" alt="${escapeHtml(project.title)}" class="project-thumb-img" />`;
+  }
+  return `<div class="project-thumb-inner ${project.thumb}">${escapeHtml(project.initials)}</div>`;
 }
 
 function renderProjectCard(project, index, { full = false } = {}) {
@@ -19,19 +36,17 @@ function renderProjectCard(project, index, { full = false } = {}) {
   const isLink = Boolean(href);
   const tag = isLink ? 'a' : 'div';
   const extraAttrs = isLink
-    ? `href="${href}"${project.url ? ' target="_blank" rel="noopener noreferrer"' : ''}`
+    ? `href="${escapeHtml(href)}"${project.url ? ' target="_blank" rel="noopener noreferrer"' : ''}`
     : 'style="cursor:default"';
 
   return `
-    <article class="project-card" id="${project.id}">
+    <article class="project-card" id="${escapeHtml(project.id)}">
       <${tag} class="project-card-link" ${extraAttrs}>
-        <div class="project-thumb">
-          <div class="project-thumb-inner ${project.thumb}">${project.initials}</div>
-        </div>
+        <div class="project-thumb">${renderThumb(project)}</div>
         <div class="project-num">${num}</div>
-        <h3 class="project-title">${project.title}</h3>
-        <p class="project-type">${project.type}</p>
-        <p class="project-desc">${desc}</p>
+        <h3 class="project-title">${escapeHtml(project.title)}</h3>
+        <p class="project-type">${escapeHtml(project.type)}</p>
+        <p class="project-desc">${escapeHtml(desc)}</p>
         ${isLink ? `<div class="project-arrow">${ICONS.arrow}</div>` : ''}
       </${tag}>
     </article>`;
@@ -40,11 +55,11 @@ function renderProjectCard(project, index, { full = false } = {}) {
 function renderEducation(items) {
   return items.map((item) => `
     <div class="timeline-item">
-      <div class="timeline-year">${item.year}</div>
+      <div class="timeline-year">${escapeHtml(item.year)}</div>
       <div>
-        <h3 class="timeline-title">${item.degree}</h3>
-        <p class="timeline-org">${item.org}</p>
-        <p class="timeline-desc">${item.desc}</p>
+        <h3 class="timeline-title">${escapeHtml(item.degree)}</h3>
+        <p class="timeline-org">${escapeHtml(item.org)}</p>
+        <p class="timeline-desc">${escapeHtml(item.desc)}</p>
       </div>
     </div>`).join('');
 }
@@ -52,20 +67,20 @@ function renderEducation(items) {
 function renderCourses(items) {
   return items.map((item) => `
     <div class="course-card">
-      <div class="course-provider">${item.provider}</div>
-      <h3 class="course-name">${item.name}</h3>
-      <p class="course-meta">${item.meta}</p>
+      <div class="course-provider">${escapeHtml(item.provider)}</div>
+      <h3 class="course-name">${escapeHtml(item.name)}</h3>
+      <p class="course-meta">${escapeHtml(item.meta)}</p>
     </div>`).join('');
 }
 
 function renderSocialLinks(social) {
   const links = [
     { label: 'LinkedIn', url: social.linkedin, icon: ICONS.linkedin },
-    { label: 'GitHub',   url: social.github,   icon: ICONS.github },
-    { label: 'X (Twitter)', url: social.x,     icon: ICONS.x }
+    { label: 'GitHub', url: social.github, icon: ICONS.github },
+    { label: 'X (Twitter)', url: social.x, icon: ICONS.x }
   ];
   return links.map((l) => `
-    <a href="${l.url}" target="_blank" rel="noopener noreferrer" class="social-link">
+    <a href="${escapeHtml(l.url)}" target="_blank" rel="noopener noreferrer" class="social-link">
       ${l.label}
       ${l.icon}
     </a>`).join('');
@@ -74,58 +89,98 @@ function renderSocialLinks(social) {
 function renderStats(stats) {
   return stats.map((s) => `
     <div>
-      <div class="stat-num">${s.num}</div>
-      <div class="stat-label">${s.label}</div>
+      <div class="stat-num">${escapeHtml(s.num)}</div>
+      <div class="stat-label">${escapeHtml(s.label)}</div>
     </div>`).join('');
 }
 
-/* ── Populate page from config ─────────────────────────────── */
-function initPortfolio() {
-  const { profile, social, stats, education, courses, projects } = PORTFOLIO;
+function asStrings(items, key) {
+  if (!items?.length) return [];
+  return items.map((item) => (typeof item === 'string' ? item : item[key]));
+}
 
-  // Email links
+function renderHero(profile) {
+  const eyebrow = document.getElementById('hero-eyebrow');
+  const title = document.getElementById('hero-title');
+  const role = document.getElementById('hero-role');
+  const desc = document.getElementById('hero-desc');
+  const tags = document.getElementById('hero-tags');
+  const tagline = asStrings(profile.tagline, 'line');
+  const skillTags = asStrings(profile.tags, 'tag');
+
+  if (eyebrow) eyebrow.textContent = profile.title;
+  if (role) role.textContent = profile.role;
+  if (desc) desc.textContent = profile.bio;
+
+  if (title && tagline.length) {
+    title.innerHTML = tagline.map((line, i) => {
+      const isLast = i === tagline.length - 1;
+      const content = isLast
+        ? `<em style="font-style:italic;color:var(--accent)">${escapeHtml(line)}</em>`
+        : escapeHtml(line);
+      return `<span class="line"><span>${content}</span></span>`;
+    }).join('');
+  }
+
+  if (tags && skillTags.length) {
+    tags.innerHTML = skillTags
+      .map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`)
+      .join('');
+  }
+}
+
+/* ── Populate page from content ────────────────────────────── */
+function initPortfolio(data) {
+  const { profile, social, stats, education, courses, projects } = data;
+
+  renderHero(profile);
+
   document.querySelectorAll('[data-email]').forEach((el) => {
     el.href = `mailto:${profile.email}`;
     el.textContent = profile.email;
   });
 
-  // Copyright
   document.querySelectorAll('[data-copyright]').forEach((el) => {
     el.textContent = profile.copyright;
   });
 
-  // Stats
   const statsEl = document.getElementById('stats-grid');
   if (statsEl) statsEl.innerHTML = renderStats(stats);
 
-  // Education
   const eduEl = document.getElementById('education-list');
   if (eduEl) eduEl.innerHTML = renderEducation(education);
 
-  // Courses
   const coursesEl = document.getElementById('courses-grid');
   if (coursesEl) coursesEl.innerHTML = renderCourses(courses);
 
-  // Social links (all contact sections)
   document.querySelectorAll('[data-social]').forEach((el) => {
     el.innerHTML = renderSocialLinks(social);
   });
 
-  // Featured projects (home)
   const featuredEl = document.getElementById('featured-projects');
   if (featuredEl) {
-    const featured = projects.filter((p) => p.featured);
-    featuredEl.innerHTML = featured
+    featuredEl.innerHTML = projects
+      .filter((p) => p.featured)
       .map((p, i) => renderProjectCard(p, i))
       .join('');
   }
 
-  // All projects (projects page)
   const allEl = document.getElementById('all-projects');
   if (allEl) {
     allEl.innerHTML = projects
       .map((p, i) => renderProjectCard(p, i, { full: true }))
       .join('');
+  }
+}
+
+async function loadPortfolio() {
+  try {
+    const res = await fetch(CONTENT_URL);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return await res.json();
+  } catch (err) {
+    console.error('Failed to load portfolio content:', err);
+    return null;
   }
 }
 
@@ -186,7 +241,8 @@ if (sections.length && navAnchors.length) {
 }
 
 /* ── Boot ──────────────────────────────────────────────────── */
-document.addEventListener('DOMContentLoaded', () => {
-  initPortfolio();
+document.addEventListener('DOMContentLoaded', async () => {
+  const data = await loadPortfolio();
+  if (data) initPortfolio(data);
   initReveal();
 });

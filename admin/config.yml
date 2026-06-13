@@ -1,0 +1,110 @@
+# Decap CMS — Portfolio Editor
+# Docs: https://decapcms.org/docs/intro/
+
+# For local editing: run `npm run cms` then open /admin
+local_backend: true
+
+# For live editing on your domain (after OAuth setup — see CMS-SETUP.md):
+# 1. Comment out local_backend above
+# 2. Uncomment backend section below and set auth_endpoint to your OAuth proxy URL
+#
+# backend:
+#   name: github
+#   repo: SamzQode/portfolio
+#   branch: main
+#   base_url: https://your-oauth-proxy.onrender.com
+#   auth_endpoint: auth
+
+media_folder: images/uploads
+public_folder: /images/uploads
+
+site_url: https://github.com/SamzQode/portfolio
+display_url: https://samzqode.com
+logo_url: https://github.com/SamzQode.png
+
+collections:
+  - name: portfolio
+    label: Portfolio
+    files:
+      - name: content
+        label: Site Content
+        file: content/portfolio.json
+        fields:
+          - label: Profile
+            name: profile
+            widget: object
+            collapsed: false
+            fields:
+              - { label: Name, name: name, widget: string }
+              - { label: Email, name: email, widget: string }
+              - { label: Title (hero eyebrow), name: title, widget: string }
+              - { label: Role, name: role, widget: string }
+              - label: Tagline (3 lines)
+                name: tagline
+                widget: list
+                max: 3
+                min: 3
+                field: { label: Line, name: line, widget: string }
+              - { label: Bio, name: bio, widget: text }
+              - label: Skill tags
+                name: tags
+                widget: list
+                field: { label: Tag, name: tag, widget: string }
+              - { label: Copyright, name: copyright, widget: string }
+
+          - label: Social Links
+            name: social
+            widget: object
+            fields:
+              - { label: LinkedIn URL, name: linkedin, widget: string }
+              - { label: GitHub URL, name: github, widget: string }
+              - { label: X (Twitter) URL, name: x, widget: string }
+
+          - label: About Stats
+            name: stats
+            widget: list
+            fields:
+              - { label: Number, name: num, widget: string }
+              - { label: Label, name: label, widget: string }
+
+          - label: Education
+            name: education
+            widget: list
+            fields:
+              - { label: Year / Label, name: year, widget: string }
+              - { label: Degree, name: degree, widget: string }
+              - { label: Institution, name: org, widget: string }
+              - { label: Description, name: desc, widget: text }
+
+          - label: Courses & Certifications
+            name: courses
+            widget: list
+            fields:
+              - { label: Provider, name: provider, widget: string }
+              - { label: Name, name: name, widget: string }
+              - { label: Description, name: meta, widget: string }
+
+          - label: Projects
+            name: projects
+            widget: list
+            summary: "{{title}}"
+            fields:
+              - { label: ID (anchor link, no spaces), name: id, widget: string, hint: "e.g. my-project" }
+              - { label: Title, name: title, widget: string }
+              - { label: Type / Tech stack, name: type, widget: string }
+              - { label: Short description (home page), name: short, widget: text }
+              - { label: Full description (projects page), name: full, widget: text }
+              - { label: Thumbnail image, name: image, widget: image, required: false, hint: "Upload an image, or leave empty to use gradient initials" }
+              - { label: Initials (fallback if no image), name: initials, widget: string, hint: "e.g. MS" }
+              - label: Gradient style (fallback if no image)
+                name: thumb
+                widget: select
+                options:
+                  - { label: Warm brown, value: thumb-maison }
+                  - { label: Green, value: thumb-floom }
+                  - { label: Blue, value: thumb-health }
+                  - { label: Purple, value: thumb-bits3 }
+                  - { label: Dark grey, value: thumb-watch }
+                  - { label: Amber, value: thumb-avenues }
+              - { label: External URL (optional), name: url, widget: string, required: false }
+              - { label: Show on home page, name: featured, widget: boolean, default: false }

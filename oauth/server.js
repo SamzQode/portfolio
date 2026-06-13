@@ -17,6 +17,30 @@ const CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 const REDIRECT_URI = process.env.OAUTH_REDIRECT_URI;
 const PORT = process.env.PORT || 3000;
 
+function configStatus() {
+  const issues = [];
+  if (!CLIENT_ID) issues.push('GITHUB_CLIENT_ID is missing');
+  else if (!/^Ov23/i.test(CLIENT_ID)) {
+    issues.push('GITHUB_CLIENT_ID should start with "Ov23" — recopy from GitHub OAuth App settings');
+  }
+  if (!CLIENT_SECRET) issues.push('GITHUB_CLIENT_SECRET is missing');
+  if (!REDIRECT_URI) issues.push('OAUTH_REDIRECT_URI is missing');
+  else if (!REDIRECT_URI.endsWith('/callback')) {
+    issues.push('OAUTH_REDIRECT_URI must end with /callback');
+  }
+  return {
+    ok: issues.length === 0,
+    issues,
+    clientIdPrefix: CLIENT_ID ? `${CLIENT_ID.slice(0, 4)}…` : null,
+    redirectUri: REDIRECT_URI || null,
+  };
+}
+
+const CONFIG = configStatus();
+if (!CONFIG.ok) {
+  console.warn('OAuth config issues:', CONFIG.issues.join('; '));
+}
+
 function send(res, status, body, contentType = 'text/html') {
   res.writeHead(status, { 'Content-Type': contentType, 'Access-Control-Allow-Origin': '*' });
   res.end(body);
@@ -57,7 +81,10 @@ const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://localhost:${PORT}`);
 
   if (url.pathname === '/health') {
-    return send(res, 200, 'ok', 'text/plain');
+    const body = CONFIG.ok
+      ? 'ok'
+      : JSON.stringify({ status: 'misconfigured', ...CONFIG }, null, 2);
+    return send(res, CONFIG.ok ? 200 : 503, body, CONFIG.ok ? 'text/plain' : 'application/json');
   }
 
   if (url.pathname === '/auth') {

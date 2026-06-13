@@ -67,6 +67,15 @@ collections:
               - { label: Number, name: num, widget: string }
               - { label: Label, name: label, widget: string }
 
+          - label: Consultation
+            name: consultation
+            widget: list
+            summary: "{{name}}"
+            hint: "Advisory and consulting engagements"
+            fields:
+              - { label: Client / Company, name: name, widget: string }
+              - { label: Description, name: desc, widget: text }
+
           - label: Education
             name: education
             widget: list
@@ -84,18 +93,44 @@ collections:
               - { label: Name, name: name, widget: string }
               - { label: Description, name: meta, widget: string }
 
-          - label: Projects
-            name: projects
+          - label: Publications
+            name: publications
             widget: list
             summary: "{{title}}"
+            hint: "Academic papers and research publications"
             fields:
-              - { label: ID (anchor link, no spaces), name: id, widget: string, hint: "e.g. my-project" }
+              - { label: Paper title, name: title, widget: string }
+              - { label: Venue / Publisher, name: venue, widget: string, hint: "e.g. IEEE" }
+              - { label: Status, name: status, widget: string, hint: "e.g. Reviewed, Published" }
+
+          - label: Corporate Experience
+            name: corporate
+            widget: list
+            summary: "{{industry}}"
+            hint: "Corporate achievements organised by industry"
+            fields:
+              - { label: Industry, name: industry, widget: string, hint: "e.g. Telecom, AI" }
+              - label: Companies
+                name: companies
+                widget: list
+                summary: "{{name}}"
+                fields:
+                  - { label: Company name, name: name, widget: string }
+                  - { label: Role / Solution (optional), name: role, widget: string, required: false, hint: "e.g. AI Biometrics Security Solutions" }
+
+          - label: My Lab
+            name: lab
+            widget: list
+            summary: "{{title}}"
+            hint: "Software development projects — mobile apps, web platforms, and tools"
+            fields:
+              - { label: ID (anchor link, no spaces), name: id, widget: string }
               - { label: Title, name: title, widget: string }
               - { label: Type / Tech stack, name: type, widget: string }
               - { label: Short description (home page), name: short, widget: text }
-              - { label: Full description (projects page), name: full, widget: text }
-              - { label: Thumbnail image, name: image, widget: image, required: false, hint: "Upload an image, or leave empty to use gradient initials" }
-              - { label: Initials (fallback if no image), name: initials, widget: string, hint: "e.g. MS" }
+              - { label: Full description (lab page), name: full, widget: text }
+              - { label: Thumbnail image, name: image, widget: image, required: false }
+              - { label: Initials (fallback if no image), name: initials, widget: string }
               - label: Gradient style (fallback if no image)
                 name: thumb
                 widget: select
@@ -106,5 +141,6 @@ collections:
                   - { label: Purple, value: thumb-bits3 }
                   - { label: Dark grey, value: thumb-watch }
                   - { label: Amber, value: thumb-avenues }
+                  - { label: Gold, value: thumb-gold }
               - { label: External URL (optional), name: url, widget: string, required: false }
               - { label: Show on home page, name: featured, widget: boolean, default: false }

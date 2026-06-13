@@ -29,10 +29,37 @@ function renderThumb(project) {
   return `<div class="project-thumb-inner ${project.thumb}">${escapeHtml(project.initials)}</div>`;
 }
 
-function renderProjectCard(project, index, { full = false } = {}) {
+function renderCompanyLabel(company) {
+  if (company.role) {
+    return `${escapeHtml(company.name)}<span class="corp-role"> — ${escapeHtml(company.role)}</span>`;
+  }
+  return escapeHtml(company.name);
+}
+
+function renderCorporate(industries) {
+  let num = 0;
+  return industries.map((ind) => {
+    const companies = ind.companies.map((co) => {
+      num += 1;
+      return `
+        <li class="corp-company">
+          <span class="corp-num">${padNum(num)}</span>
+          <span class="corp-name">${renderCompanyLabel(co)}</span>
+        </li>`;
+    }).join('');
+
+    return `
+      <div class="corp-industry">
+        <h3 class="corp-industry-title">${escapeHtml(ind.industry)}</h3>
+        <ul class="corp-company-list">${companies}</ul>
+      </div>`;
+  }).join('');
+}
+
+function renderProjectCard(project, index, { full = false, detailPage = 'lab' } = {}) {
   const num = padNum(index + 1);
   const desc = full ? project.full : project.short;
-  const href = project.url || (full ? '' : `projects.html#${project.id}`);
+  const href = project.url || (full ? '' : `${detailPage}.html#${project.id}`);
   const isLink = Boolean(href);
   const tag = isLink ? 'a' : 'div';
   const extraAttrs = isLink
@@ -73,6 +100,26 @@ function renderCourses(items) {
     </div>`).join('');
 }
 
+function renderPublications(items) {
+  return items.map((item) => `
+    <div class="publication-card">
+      <div class="publication-venue">${escapeHtml(item.venue)} Paper</div>
+      <h3 class="publication-title">${escapeHtml(item.title)}</h3>
+      <p class="publication-status">Status: <span>${escapeHtml(item.status)}</span></p>
+    </div>`).join('');
+}
+
+function renderConsultation(items) {
+  return items.map((item, index) => `
+    <div class="consultation-card">
+      <span class="consultation-num">${padNum(index + 1)}</span>
+      <div>
+        <h3 class="consultation-name">${escapeHtml(item.name)}</h3>
+        <p class="consultation-desc">${escapeHtml(item.desc)}</p>
+      </div>
+    </div>`).join('');
+}
+
 function renderSocialLinks(social) {
   const links = [
     { label: 'LinkedIn', url: social.linkedin, icon: ICONS.linkedin },
@@ -105,7 +152,7 @@ function renderBrand(profile) {
   const heroPhoto = document.getElementById('hero-photo');
 
   if (navLogo && profile.logo) {
-    navLogo.innerHTML = `<img src="${escapeHtml(profile.logo)}" alt="${escapeHtml(profile.name)}" class="nav-logo-img" width="160" height="40" />`;
+    navLogo.innerHTML = `<img src="${escapeHtml(profile.logo)}" alt="${escapeHtml(profile.name)}" class="nav-logo-img" width="140" height="48" />`;
   } else if (navLogo) {
     navLogo.textContent = profile.name;
   }
@@ -153,7 +200,7 @@ function renderHero(profile) {
 
 /* ── Populate page from content ────────────────────────────── */
 function initPortfolio(data) {
-  const { profile, social, stats, education, courses, projects } = data;
+  const { profile, social, stats, education, courses, publications = [], consultation = [], corporate = [], lab = [] } = data;
 
   renderBrand(profile);
   renderHero(profile);
@@ -173,6 +220,12 @@ function initPortfolio(data) {
   const eduEl = document.getElementById('education-list');
   if (eduEl) eduEl.innerHTML = renderEducation(education);
 
+  const publicationsEl = document.getElementById('publications-list');
+  if (publicationsEl) publicationsEl.innerHTML = renderPublications(publications);
+
+  const consultationEl = document.getElementById('consultation-list');
+  if (consultationEl) consultationEl.innerHTML = renderConsultation(consultation);
+
   const coursesEl = document.getElementById('courses-grid');
   if (coursesEl) coursesEl.innerHTML = renderCourses(courses);
 
@@ -180,18 +233,24 @@ function initPortfolio(data) {
     el.innerHTML = renderSocialLinks(social);
   });
 
-  const featuredEl = document.getElementById('featured-projects');
-  if (featuredEl) {
-    featuredEl.innerHTML = projects
+  const corporateEl = document.getElementById('corporate-list');
+  if (corporateEl) corporateEl.innerHTML = renderCorporate(corporate);
+
+  const corporateFullEl = document.getElementById('corporate-full');
+  if (corporateFullEl) corporateFullEl.innerHTML = renderCorporate(corporate);
+
+  const featuredLabEl = document.getElementById('featured-lab');
+  if (featuredLabEl) {
+    featuredLabEl.innerHTML = lab
       .filter((p) => p.featured)
-      .map((p, i) => renderProjectCard(p, i))
+      .map((p, i) => renderProjectCard(p, i, { detailPage: 'lab' }))
       .join('');
   }
 
-  const allEl = document.getElementById('all-projects');
-  if (allEl) {
-    allEl.innerHTML = projects
-      .map((p, i) => renderProjectCard(p, i, { full: true }))
+  const allLabEl = document.getElementById('all-lab');
+  if (allLabEl) {
+    allLabEl.innerHTML = lab
+      .map((p, i) => renderProjectCard(p, i, { full: true, detailPage: 'lab' }))
       .join('');
   }
 }

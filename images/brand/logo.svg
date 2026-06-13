@@ -1,19 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 240" role="img" aria-label="Samih Elkhider">
-  <rect width="480" height="240" fill="#1c2430"/>
-  <!-- SE monogram -->
-  <text x="240" y="108"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 110" role="img" aria-label="SE">
+  <text x="100" y="88"
         text-anchor="middle"
-        fill="#ffffff"
+        fill="#FFFFFF"
         font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif"
         font-size="96"
         font-weight="500"
-        letter-spacing="-4">SE</text>
-  <!-- Full name -->
-  <text x="240" y="188"
-        text-anchor="middle"
-        fill="#ffffff"
-        font-family="'DM Sans', Arial, Helvetica, sans-serif"
-        font-size="22"
-        font-weight="400"
-        letter-spacing="0.38em">SAMIH ELKHIDER</text>
+        letter-spacing="-10"
+        style="text-rendering:geometricPrecision;shape-rendering:geometricPrecision">SE</text>
 </svg>

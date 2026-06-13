@@ -2,22 +2,23 @@
   "profile": {
     "name": "Samih Elkhider",
     "email": "omer.samih@gmail.com",
-    "title": "Software Engineer · Product Developer",
-    "role": "iOS · Web · Healthcare Tech",
-    "logo": "/images/brand/logo.svg",
+    "title": "Product & Business Development Expert",
+    "role": "Product Development · Go-To-Market · Artificial Intelligence",
+    "logo": "/images/brand/logo.png",
     "profilePhoto": "/images/uploads/samih-elkhider-profile.jpg",
     "tagline": [
       { "line": "Building digital" },
       { "line": "products with" },
       { "line": "intent." }
     ],
-    "bio": "I design and ship thoughtful software — from SwiftUI mobile apps and watchOS companions to full-stack web platforms and enterprise documentation systems.",
+    "bio": "A results-driven Technologist with over 10 years of experience building and growing technology products across startups and multinational companies. I enjoy turning ideas into scalable products that solve real business problems and create measurable impact. My background spans product strategy, product development, presales and go-to-market execution with strong experience in AI-driven solutions including ML, Software Development, Telecom and Computer Vision.",
     "tags": [
-      { "tag": "SwiftUI" },
-      { "tag": "Next.js" },
-      { "tag": "PMP" },
-      { "tag": "Business Analysis" },
-      { "tag": "Healthcare Tech" }
+      { "tag": "Software Development" },
+      { "tag": "Telecom" },
+      { "tag": "Security Technology" },
+      { "tag": "Artificial Intelligence" },
+      { "tag": "Product Development" },
+      { "tag": "Go-To-Market" }
     ],
     "copyright": "© 2026 Samih Elkhider. All rights reserved."
   },
@@ -96,7 +97,57 @@
       "meta": "Certified biometrics fundamentals"
     }
   ],
-  "projects": [
+  "publications": [
+    {
+      "title": "Face Recognition using different substance LDA vs PCA",
+      "venue": "IEEE",
+      "status": "Reviewed"
+    }
+  ],
+  "consultation": [
+    {
+      "name": "Silenmode SDN BHD",
+      "desc": "A fully automated Fuel Retail solution to connect your fuel operation and your convenience store all in one hub."
+    },
+    {
+      "name": "BSS Connect",
+      "desc": "Best BSS & OSS systems designed specially to serve both commercial and technical telecom challenges in the region."
+    },
+    {
+      "name": "Double Digits",
+      "desc": "Technology advisor to the family VC to direct investments and help launch technology products under the group subsidiaries."
+    }
+  ],
+  "corporate": [
+    {
+      "industry": "Telecom",
+      "companies": [
+        { "name": "Zain" },
+        { "name": "Maxnet Wireless Broadband" }
+      ]
+    },
+    {
+      "industry": "AI",
+      "companies": [
+        { "name": "EYE-C", "role": "AI Biometrics Security Solutions" },
+        { "name": "Neuecode" }
+      ]
+    },
+    {
+      "industry": "Facility Management Systems",
+      "companies": [
+        { "name": "Secure Parking", "role": "Parking Management System" }
+      ]
+    },
+    {
+      "industry": "Interactive Multimedia",
+      "companies": [
+        { "name": "Big Gorilla Apps UK" },
+        { "name": "Muazzin Group", "role": "Interactive Multimedia Systems" }
+      ]
+    }
+  ],
+  "lab": [
     {
       "id": "maison-sale",
       "initials": "MS",
@@ -122,14 +173,14 @@
       "featured": true
     },
     {
-      "id": "sudan-health",
-      "initials": "SH",
+      "id": "medical-insurance-hub",
+      "initials": "MI",
       "thumb": "thumb-health",
       "image": "",
-      "title": "Sudan HealthCare Hub",
+      "title": "Medical Insurance Hub",
       "type": "Healthcare · Documentation · Jira",
-      "short": "End-to-end healthcare platform documentation — BRD, BPMN flows, ERD data model, and Jira backlog management.",
-      "full": "Comprehensive healthcare platform documentation including BRD, BPMN process flows, ERD data model, UAT test cases, Figma wireframe briefs, and a full Jira backlog with automated import scripts for the SHH project.",
+      "short": "End-to-end medical insurance platform documentation — BRD, BPMN flows, ERD data model, and Jira backlog management.",
+      "full": "Comprehensive medical insurance platform documentation including BRD, BPMN process flows, ERD data model, UAT test cases, Figma wireframe briefs, and a full Jira backlog with automated import scripts for the SHH project.",
       "url": "",
       "featured": true
     },
@@ -142,18 +193,6 @@
       "type": "Next.js 15 · Strapi 5 · CMS",
       "short": "Bilingual corporate site with a headless CMS dashboard, dark/light mode, and fully editable content.",
       "full": "A bilingual (EN/AR) corporate website with Next.js 15 frontend, Strapi 5 headless CMS, dark/light theming, Docker deployment, and a custom admin dashboard for managing portfolio, blog, team, and services content.",
-      "url": "",
-      "featured": true
-    },
-    {
-      "id": "maison-watch",
-      "initials": "MW",
-      "thumb": "thumb-watch",
-      "image": "",
-      "title": "Maison Watch",
-      "type": "watchOS · SwiftUI · Companion",
-      "short": "watchOS companion for Maison Sale with bidding, payments, and inbox messaging.",
-      "full": "watchOS companion for Maison Sale featuring product browsing, bidding confirmation modals, payment flow, order confirmation, and inbox messaging — all designed for the Apple Watch form factor.",
       "url": "",
       "featured": false
     },
@@ -168,6 +207,66 @@
       "full": "Product wireframes and UX flows for an online education platform, covering user journeys, screen layouts, and interaction patterns for web and mobile experiences.",
       "url": "",
       "featured": false
+    },
+    {
+      "id": "alpha-gold",
+      "initials": "AG",
+      "thumb": "thumb-gold",
+      "image": "",
+      "title": "Alpha Gold",
+      "type": "Fintech · B2C · C2C",
+      "short": "Fintech platform to trade real and virtual gold B2C & C2C — from 1g to 1 KG.",
+      "full": "A fintech platform enabling consumers to trade real and virtual gold in B2C and C2C models, supporting transactions from 1 gram up to 1 kilogram.",
+      "url": "",
+      "featured": true
+    },
+    {
+      "id": "clinical",
+      "initials": "CL",
+      "thumb": "thumb-health",
+      "image": "",
+      "title": "Clinical",
+      "type": "Healthcare · Telemedicine",
+      "short": "A fully virtual medical consultation platform.",
+      "full": "A fully virtual medical consultation platform connecting patients and clinicians for remote diagnosis, follow-up, and care delivery.",
+      "url": "",
+      "featured": true
+    },
+    {
+      "id": "hadreen",
+      "initials": "HD",
+      "thumb": "thumb-floom",
+      "image": "",
+      "title": "Hadreen",
+      "type": "On-Demand · Mobile App",
+      "short": "A laundry app to serve you with a click of a button.",
+      "full": "An on-demand laundry app that picks up, cleans, and delivers your clothes — booked and tracked with a single tap.",
+      "url": "",
+      "featured": true
+    },
+    {
+      "id": "qafila",
+      "initials": "QF",
+      "thumb": "thumb-maison",
+      "image": "",
+      "title": "Qafila",
+      "type": "E-commerce · Luxury",
+      "short": "Premium e-commerce platform to get your exclusive luxury items.",
+      "full": "A premium e-commerce platform curated for exclusive luxury items — discovery, checkout, and delivery built for high-end retail.",
+      "url": "",
+      "featured": true
+    },
+    {
+      "id": "saerha",
+      "initials": "SR",
+      "thumb": "thumb-bits3",
+      "image": "",
+      "title": "Saerha",
+      "type": "AI · Mobile · Saudi Arabia",
+      "short": "First Saudi-made AI mobile app that scans anything and finds the best deal around your area.",
+      "full": "The first Saudi-made AI mobile app that scans any product or item and surfaces the best deals available near you — price comparison powered by computer vision.",
+      "url": "",
+      "featured": true
     }
   ]
 }

@@ -1,17 +1,15 @@
 # Decap CMS — Portfolio Editor
 # Docs: https://decapcms.org/docs/intro/
 
-# For local editing: run `npm run cms` (or `npm run dev`) then open /admin
-local_backend: true
+# For local editing: uncomment the line below and run `npm run dev`
+# local_backend: true
 
-# Required — used for live editing; overridden locally by decap-server
 backend:
   name: github
   repo: SamzQode/portfolio
   branch: main
-  # For live CMS on Hostinger, add after OAuth setup (see CMS-SETUP.md):
-  # base_url: https://your-oauth-proxy.onrender.com
-  # auth_endpoint: auth
+  base_url: https://portfolio-oauth-oauth-oauth.onrender.com
+  auth_endpoint: auth
 
 media_folder: images/uploads
 public_folder: /images/uploads

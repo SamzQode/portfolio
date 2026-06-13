@@ -20,8 +20,8 @@ const PORT = process.env.PORT || 3000;
 function configStatus() {
   const issues = [];
   if (!CLIENT_ID) issues.push('GITHUB_CLIENT_ID is missing');
-  else if (!/^Ov23/i.test(CLIENT_ID)) {
-    issues.push('GITHUB_CLIENT_ID should start with "Ov23" — recopy from GitHub OAuth App settings');
+  else if (CLIENT_ID.length < 10) {
+    issues.push('GITHUB_CLIENT_ID looks too short — recopy from GitHub OAuth App settings');
   }
   if (!CLIENT_SECRET) issues.push('GITHUB_CLIENT_SECRET is missing');
   if (!REDIRECT_URI) issues.push('OAUTH_REDIRECT_URI is missing');

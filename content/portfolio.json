@@ -1,9 +1,11 @@
 {
   "profile": {
-    "name": "Samz Qode",
+    "name": "Samih Elkhider",
     "email": "omer.samih@gmail.com",
     "title": "Software Engineer · Product Developer",
     "role": "iOS · Web · Healthcare Tech",
+    "logo": "/images/brand/logo.svg",
+    "profilePhoto": "/images/uploads/samih-elkhider-profile.jpg",
     "tagline": [
       { "line": "Building digital" },
       { "line": "products with" },
@@ -17,7 +19,7 @@
       { "tag": "Business Analysis" },
       { "tag": "Healthcare Tech" }
     ],
-    "copyright": "© 2026 Samz Qode. All rights reserved."
+    "copyright": "© 2026 Samih Elkhider. All rights reserved."
   },
   "social": {
     "linkedin": "https://www.linkedin.com/in/samih-el-khider-a636aab1/",

@@ -17,7 +17,7 @@ media_folder: images/uploads
 public_folder: /images/uploads
 
 site_url: https://github.com/SamzQode/portfolio
-display_url: https://samzqode.com
+display_url: https://samih-elkhider.com
 logo_url: https://github.com/SamzQode.png
 
 collections:
@@ -35,6 +35,8 @@ collections:
             fields:
               - { label: Name, name: name, widget: string }
               - { label: Email, name: email, widget: string }
+              - { label: Logo, name: logo, widget: image, hint: "Use SVG for best quality. Saved to images/uploads/" }
+              - { label: Profile photo, name: profilePhoto, widget: image, hint: "Portrait photo for hero section" }
               - { label: Title (hero eyebrow), name: title, widget: string }
               - { label: Role, name: role, widget: string }
               - label: Tagline (3 lines)

@@ -1,4 +1,4 @@
-# Samz Qode — Personal Portfolio
+# Samih Elkhider — Personal Portfolio
 
 Static portfolio with **Decap CMS** visual editor. Inspired by [MO—ARTS](https://mo-arts.framer.ai/).
 

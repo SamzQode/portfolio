@@ -99,27 +99,49 @@ function asStrings(items, key) {
   return items.map((item) => (typeof item === 'string' ? item : item[key]));
 }
 
+function renderBrand(profile) {
+  const navLogo = document.getElementById('nav-logo');
+  const heroLogo = document.getElementById('hero-logo');
+  const heroPhoto = document.getElementById('hero-photo');
+
+  if (navLogo && profile.logo) {
+    navLogo.innerHTML = `<img src="${escapeHtml(profile.logo)}" alt="${escapeHtml(profile.name)}" class="nav-logo-img" width="160" height="40" />`;
+  } else if (navLogo) {
+    navLogo.textContent = profile.name;
+  }
+
+  if (heroLogo && profile.logo) {
+    heroLogo.src = profile.logo;
+    heroLogo.alt = `${profile.name} logo`;
+  }
+
+  if (heroPhoto && profile.profilePhoto) {
+    heroPhoto.src = profile.profilePhoto;
+    heroPhoto.alt = profile.name;
+  }
+}
+
 function renderHero(profile) {
   const eyebrow = document.getElementById('hero-eyebrow');
-  const title = document.getElementById('hero-title');
+  const name = document.getElementById('hero-name');
+  const tagline = document.getElementById('hero-tagline');
   const role = document.getElementById('hero-role');
   const desc = document.getElementById('hero-desc');
   const tags = document.getElementById('hero-tags');
-  const tagline = asStrings(profile.tagline, 'line');
+  const taglineLines = asStrings(profile.tagline, 'line');
   const skillTags = asStrings(profile.tags, 'tag');
 
   if (eyebrow) eyebrow.textContent = profile.title;
+  if (name) name.textContent = profile.name;
   if (role) role.textContent = profile.role;
   if (desc) desc.textContent = profile.bio;
 
-  if (title && tagline.length) {
-    title.innerHTML = tagline.map((line, i) => {
-      const isLast = i === tagline.length - 1;
-      const content = isLast
-        ? `<em style="font-style:italic;color:var(--accent)">${escapeHtml(line)}</em>`
-        : escapeHtml(line);
-      return `<span class="line"><span>${content}</span></span>`;
-    }).join('');
+  if (tagline && taglineLines.length) {
+    const last = taglineLines[taglineLines.length - 1];
+    const rest = taglineLines.slice(0, -1).join(' ');
+    tagline.innerHTML = rest
+      ? `${escapeHtml(rest)} <em>${escapeHtml(last)}</em>`
+      : `<em>${escapeHtml(last)}</em>`;
   }
 
   if (tags && skillTags.length) {
@@ -133,6 +155,7 @@ function renderHero(profile) {
 function initPortfolio(data) {
   const { profile, social, stats, education, courses, projects } = data;
 
+  renderBrand(profile);
   renderHero(profile);
 
   document.querySelectorAll('[data-email]').forEach((el) => {

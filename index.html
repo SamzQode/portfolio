@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Samz Qode — Software Engineer & Product Developer. iOS, web, and healthcare technology." />
-  <title>Samz Qode — Software Engineer</title>
+  <meta name="description" content="Samih Elkhider — Software Engineer & Product Developer. iOS, web, and healthcare technology." />
+  <title>Samih Elkhider — Software Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet" />
@@ -15,7 +15,7 @@
   <!-- ═══ NAV ═══ -->
   <nav class="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">Samz<em>Qode</em></a>
+      <a href="index.html" class="nav-logo" id="nav-logo" aria-label="Samih Elkhider">Samih Elkhider</a>
       <button class="nav-toggle" aria-label="Toggle menu">
         <span></span><span></span><span></span>
       </button>
@@ -33,26 +33,29 @@
   <!-- ═══ HERO ═══ -->
   <header class="hero">
     <div class="container hero-grid">
-      <div>
+      <div class="hero-content">
+        <div class="hero-brand reveal">
+          <img id="hero-logo" class="hero-logo" src="/images/brand/logo.svg" alt="Samih Elkhider logo" width="200" height="100" />
+        </div>
         <p class="hero-eyebrow" id="hero-eyebrow">Software Engineer · Product Developer</p>
-        <h1 class="hero-title" id="hero-title">
-          <span class="line"><span>Building digital</span></span>
-          <span class="line"><span>products with</span></span>
-          <span class="line"><span><em style="font-style:italic;color:var(--accent)">intent.</em></span></span>
-        </h1>
-      </div>
-      <div class="hero-right">
+        <h1 class="hero-name" id="hero-name">Samih Elkhider</h1>
+        <p class="hero-tagline" id="hero-tagline">Building digital products with intent.</p>
         <p class="hero-role" id="hero-role">iOS · Web · Healthcare Tech</p>
         <p class="hero-desc" id="hero-desc">
           I design and ship thoughtful software — from SwiftUI mobile apps and watchOS companions to full-stack web platforms and enterprise documentation systems.
         </p>
         <div class="hero-tags" id="hero-tags"></div>
-        <div style="margin-top:32px;display:flex;gap:12px;flex-wrap:wrap">
+        <div class="hero-actions">
           <a href="projects.html" class="btn btn-primary">
             View Projects
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </a>
           <a href="#contact" class="btn">Get in Touch</a>
+        </div>
+      </div>
+      <div class="hero-visual reveal">
+        <div class="hero-portrait-frame">
+          <img id="hero-photo" class="hero-portrait" src="/images/uploads/samih-elkhider-profile.jpg" alt="Samih Elkhider" width="764" height="1024" />
         </div>
       </div>
     </div>

@@ -173,20 +173,6 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   padding-bottom: 8px;
 }
 
-.hero-brand {
-  margin-bottom: 28px;
-  line-height: 0;
-  background: transparent;
-}
-
-.hero-logo {
-  width: min(140px, 38vw);
-  height: auto;
-  display: block;
-  background: transparent;
-  image-rendering: auto;
-}
-
 .hero-eyebrow {
   font-size: 12px;
   letter-spacing: 0.16em;
@@ -224,7 +210,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 
 .hero-portrait-frame {
   position: relative;
-  width: min(100%, 380px);
+  width: min(100%, 190px);
   aspect-ratio: 3 / 4;
   border: 1px solid var(--border);
   padding: 12px;
@@ -386,6 +372,25 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   font-size: 13px;
   color: var(--muted);
   letter-spacing: 0.04em;
+}
+
+/* ── Section highlight (consultation years, etc.) ─────────── */
+.section-highlight {
+  margin: 24px 0 32px;
+  padding: 32px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  max-width: 280px;
+}
+
+.section-publication {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2.5vw, 22px);
+  font-weight: 400;
+  color: var(--accent);
+  line-height: 1.5;
+  margin: 16px 0 8px;
+  letter-spacing: -0.01em;
 }
 
 /* ── Section headings ───────────────────────────────────── */
@@ -934,7 +939,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 @media (max-width: 900px) {
   .hero-grid { grid-template-columns: 1fr; gap: 48px; }
   .hero-visual { order: -1; }
-  .hero-portrait-frame { width: min(280px, 80vw); }
+  .hero-portrait-frame { width: min(140px, 50vw); }
   .about-strip-inner { grid-template-columns: 1fr; gap: 24px; }
   .projects-grid { grid-template-columns: 1fr; }
   .projects-full-grid { grid-template-columns: repeat(2, 1fr); }

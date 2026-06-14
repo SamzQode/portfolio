@@ -109,6 +109,13 @@ function renderPublications(items) {
     </div>`).join('');
 }
 
+function renderHighlight(highlight) {
+  if (!highlight?.num) return '';
+  return `
+    <div class="stat-num">${escapeHtml(highlight.num)}</div>
+    <div class="stat-label">${escapeHtml(highlight.label)}</div>`;
+}
+
 function renderConsultation(items) {
   return items.map((item, index) => `
     <div class="consultation-card">
@@ -148,18 +155,12 @@ function asStrings(items, key) {
 
 function renderBrand(profile) {
   const navLogo = document.getElementById('nav-logo');
-  const heroLogo = document.getElementById('hero-logo');
   const heroPhoto = document.getElementById('hero-photo');
 
   if (navLogo && profile.logo) {
     navLogo.innerHTML = `<img src="${escapeHtml(profile.logo)}" alt="${escapeHtml(profile.name)}" class="nav-logo-img" width="140" height="48" />`;
   } else if (navLogo) {
     navLogo.textContent = profile.name;
-  }
-
-  if (heroLogo && profile.logo) {
-    heroLogo.src = profile.logo;
-    heroLogo.alt = `${profile.name} logo`;
   }
 
   if (heroPhoto && profile.profilePhoto) {
@@ -200,7 +201,7 @@ function renderHero(profile) {
 
 /* ── Populate page from content ────────────────────────────── */
 function initPortfolio(data) {
-  const { profile, social, stats, education, courses, publications = [], consultation = [], corporate = [], lab = [] } = data;
+  const { profile, social, stats, education, courses, publicationSummary = '', publications = [], consultationHighlight, consultation = [], corporate = [], lab = [] } = data;
 
   renderBrand(profile);
   renderHero(profile);
@@ -220,8 +221,18 @@ function initPortfolio(data) {
   const eduEl = document.getElementById('education-list');
   if (eduEl) eduEl.innerHTML = renderEducation(education);
 
-  const publicationsEl = document.getElementById('publications-list');
-  if (publicationsEl) publicationsEl.innerHTML = renderPublications(publications);
+  const publicationHighlightEl = document.getElementById('publication-highlight');
+  if (publicationHighlightEl) {
+    publicationHighlightEl.textContent = publicationSummary
+      || (publications[0]
+        ? `${publications[0].title} (${publications[0].venue} Paper ${publications[0].status})`
+        : '');
+  }
+
+  const consultationHighlightEl = document.getElementById('consultation-highlight');
+  if (consultationHighlightEl && consultationHighlight) {
+    consultationHighlightEl.innerHTML = renderHighlight(consultationHighlight);
+  }
 
   const consultationEl = document.getElementById('consultation-list');
   if (consultationEl) consultationEl.innerHTML = renderConsultation(consultation);

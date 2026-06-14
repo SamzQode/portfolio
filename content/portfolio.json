@@ -29,8 +29,8 @@
   },
   "stats": [
     {
-      "num": "6+",
-      "label": "Projects shipped across mobile & web"
+      "num": "40+",
+      "label": "fully deployed technology projects"
     },
     {
       "num": "8+",
@@ -97,6 +97,7 @@
       "meta": "Certified biometrics fundamentals"
     }
   ],
+  "publicationSummary": "Face Recognition using different substance LDA vs PCA (IEEE Paper Reviewed)",
   "publications": [
     {
       "title": "Face Recognition using different substance LDA vs PCA",
@@ -104,6 +105,10 @@
       "status": "Reviewed"
     }
   ],
+  "consultationHighlight": {
+    "num": "6 years",
+    "label": "of consultations"
+  },
   "consultation": [
     {
       "name": "Silenmode SDN BHD",

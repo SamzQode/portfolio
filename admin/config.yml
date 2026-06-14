@@ -2,7 +2,8 @@
 # Docs: https://decapcms.org/docs/intro/
 
 # For local editing: uncomment the line below and run `npm run dev`
-# local_backend: true
+
+local_backend: true
 
 backend:
   name: github
